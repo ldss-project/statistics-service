@@ -8,8 +8,7 @@ wartremover-version = "0.1.2"                       # code linter for scala
 git-semantic-versioning-version = "1.1.9"           # assigns a project version depending on the existing git tags
 publish-on-central-version = "5.0.7"                # simplifies publishing artifacts on maven central
 vertx-web-version = "4.4.4"                         # event-loop architecture framework
-hexarc-version = "0.3.1"                            # hexagonal architecture framework
-mongodb-client-version = "4.10.1"                   # client for a nosql database
+hexarc-version = "0.4.0"                            # hexagonal architecture framework
 scallop-version = "4.1.0"                           # cli argument parser for scala
 # insert the version of the dependencies here...
 
@@ -22,7 +21,6 @@ scalafmt-config = { module = "org.scalameta:scalafmt-config_2.13", version.ref =
 scallop = { module = "org.rogach:scallop_3", version.ref = "scallop-version" }
 vertx-web = { module = "io.vertx:vertx-web", version.ref = "vertx-web-version" }
 hexarc = { module = "io.github.jahrim:hexarc", version.ref = "hexarc-version" }
-mongodb-client = { module = "org.mongodb:mongodb-driver-sync", version.ref = "mongodb-client-version" }
 # insert the dependencies here...
 
 [bundles]

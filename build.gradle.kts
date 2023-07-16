@@ -14,7 +14,7 @@ private class ProjectInfo { // TODO change project info
     val licenseUrl = "https://opensource.org/licenses/MIT"
 
     val website = "https://github.com/$repositoryOwner/$repositoryName"
-    val tags = listOf("scala3", "chess")
+    val tags = listOf("scala3", "chess", "statistics", "scores", "leaderboard")
 }
 private val projectInfo: ProjectInfo = ProjectInfo()
 
@@ -39,7 +39,6 @@ dependencies {
     implementation(libs.scallop)
     implementation(libs.hexarc)
     implementation(libs.vertx.web)
-    implementation(libs.mongodb.client)
     testImplementation(libs.scalatest)
     testImplementation(libs.scalatestplusjunit)
 }
@@ -47,11 +46,17 @@ dependencies {
 application {
     mainClass.set(projectInfo.implementationClass)
 
+    val httpHost: String? by project
+    val httpPort: String? by project
     val mongoDBConnection: String? by project
     val mongoDBDatabase: String? by project
+    val mongoDBCollection: String? by project
     tasks.withType(JavaExec::class.java){
+        httpHost?.apply { args("--http-host", this) }
+        httpPort?.apply { args("--http-port", this) }
         mongoDBConnection?.apply { args("--mongodb-connection", this) }
         mongoDBDatabase?.apply { args("--mongodb-database", this) }
+        mongoDBCollection?.apply { args("--mongodb-collection", this) }
     }
 }
 
@@ -88,7 +93,6 @@ publishing {
     publications {
         withType<MavenPublication> {
             pom {
-                // TODO change developers
                 developers {
                     developer {
                         name.set("Jahrim Gabriele Cesario")
