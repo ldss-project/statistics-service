@@ -19,7 +19,7 @@ import org.rogach.scallop.*
 
       new Port[StatisticsPort]:
         model = StatisticsModel(
-          scoreCollection = MongoDBPersistentCollection(
+          scores = MongoDBPersistentCollection(
             connection = arguments.mongoDBConnection(),
             database = arguments.mongoDBDatabase(),
             collection = arguments.mongoDBCollection()

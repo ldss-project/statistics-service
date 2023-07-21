@@ -40,7 +40,7 @@ object RoutingContextExtension:
      * @throws IllegalArgumentException if no value is bound to the specified path parameter.
      */
     def requirePathParam(paramName: String): String =
-      Option(self.pathParam("username")).getOrElse {
+      Option(self.pathParam(paramName)).getOrElse {
         throw IllegalArgumentException(s"Request missing path parameter '$paramName'.")
       }
 
