@@ -6,3 +6,4 @@ import org.bson.conversions.Bson
 object Codecs:
   export ScoreCodec.given
   export UserScoreCodec.given
+  export UserScoreHistoryCodec.given

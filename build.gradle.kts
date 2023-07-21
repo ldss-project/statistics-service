@@ -3,7 +3,7 @@ private class ProjectInfo { // TODO change project info
     val longName: String = "Chess Statistics Service"
     val description: String = "The service which handles the user scores in the application."
 
-    val repositoryOwner: String = "jahrim"
+    val repositoryOwner: String = "ldss-project"
     val repositoryName: String = "statistics-service"
 
     val artifactGroup: String = "io.github.jahrim.chess"

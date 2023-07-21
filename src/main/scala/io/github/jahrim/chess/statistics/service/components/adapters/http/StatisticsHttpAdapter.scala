@@ -1,5 +1,6 @@
 package io.github.jahrim.chess.statistics.service.components.adapters.http
 
+import io.github.jahrim.chess.statistics.service.components.adapters.http.StatisticsHttpAdapter.DefaultLeaderboardWindowSize
 import io.github.jahrim.chess.statistics.service.util.extensions.RoutingContextExtension.*
 import io.github.jahrim.chess.statistics.service.util.extensions.JsonObjectExtension.*
 import io.github.jahrim.chess.statistics.service.util.extensions.VertxFutureExtension.future
@@ -32,65 +33,69 @@ class StatisticsHttpAdapter(
 
     router
       .get("/")
-      .handler { message =>
-        message.response().send("Welcome to the Statistics Service!")
-      }
+      .handler(_.response.send("Welcome to the Statistics Service!"))
 
     router
-      .post("/score/:username/")
-      .handler { message =>
+      .post("/score/:username")
+      .handler(message =>
         future {
           val username: String = message.requirePathParam("username")
-          val hasWon: Boolean = message.requireBodyParam("score.hasWon")
+          val hasWon: Boolean = message.requireBodyParam("score.hasWon").as[Boolean]
           (username, hasWon)
         }
-          .compose { context.api.addScore(_, _) }
-          .onSuccess { ok(message) }
-          .onFailure { fail(message) }
-      }
+          .compose(context.api.addScore(_, _))
+          .onSuccess(ok(message))
+          .onFailure(fail(message))
+      )
 
     router
-      .delete("/score/:username/")
-      .handler { message =>
-        future { message.requirePathParam("username") }
-          .compose { context.api.deleteScores(_) }
-          .onSuccess { ok(message) }
-          .onFailure { fail(message) }
-      }
+      .delete("/score/:username")
+      .handler(message =>
+        future(message.requirePathParam("username"))
+          .compose(context.api.deleteScores(_))
+          .onSuccess(ok(message))
+          .onFailure(fail(message))
+      )
 
     router
-      .get("/score/:username/")
-      .handler { message =>
-        future { message.requirePathParam("username") }
-          .compose { context.api.getScore(_) }
-          .map { score => bson { "score" :: score }.toJson }
-          .onSuccess { json => message.sendJson(json) }
-          .onFailure { fail(message) }
-      }
+      .get("/score/:username")
+      .handler(message =>
+        future(message.requirePathParam("username"))
+          .compose(context.api.getScore(_))
+          .map(score => bson { "score" :: score }.toJson)
+          .onSuccess(json => message.sendJson(json))
+          .onFailure(fail(message))
+      )
 
     router
-      .get("/score/history/:username/")
-      .handler { message =>
-        future { message.requirePathParam("username") }
-          .compose { context.api.getScoreHistory(_) }
-          .map { scores => bson { "scores" :: scores }.toJson }
-          .onSuccess { json => message.sendJson(json) }
-          .onFailure { fail(message) }
-      }
+      .get("/score/history/:username")
+      .handler(message =>
+        future(message.requirePathParam("username"))
+          .compose(context.api.getScoreHistory(_))
+          .map(scores => bson { "scores" :: scores }.toJson)
+          .onSuccess(json => message.sendJson(json))
+          .onFailure(fail(message))
+      )
 
     router
       .get("/leaderboard")
-      .handler { message =>
+      .handler(message =>
         future {
-          val first: Int = Try(message.queryParam("first").get(0)).map(_.toInt).getOrElse(1)
-          val last: Int = Try(message.queryParam("last").get(0)).map(_.toInt).getOrElse(100)
+          val first: Long =
+            Try(message.queryParam("first").get(0))
+              .map(_.toLong)
+              .getOrElse(1)
+          val last: Long =
+            Try(message.queryParam("last").get(0))
+              .map(_.toLong)
+              .getOrElse(first + DefaultLeaderboardWindowSize)
           (first, last)
         }
-          .compose { context.api.getLeaderboard(_, _) }
-          .map { scores => bson { "scores" :: scores }.toJson }
-          .onSuccess { json => message.sendJson(json) }
-          .onFailure { fail(message) }
-      }
+          .compose(context.api.getLeaderboard(_, _))
+          .map(scores => bson { "scores" :: scores }.toJson)
+          .onSuccess(json => message.sendJson(json))
+          .onFailure(fail(message))
+      )
 
     context.vertx
       .createHttpServer(options)
@@ -107,5 +112,13 @@ class StatisticsHttpAdapter(
     val response: HttpServerResponse = e match
       case e: IllegalArgumentException => message.error(400, e)
       case e: UserNotFoundException    => message.error(404, e)
-      case e: Exception                => message.error(500, e)
+      case e: Exception                => e.printStackTrace(); message.error(500, e)
     response.send()
+
+/** Companion object of [[StatisticsHttpAdapter]]. */
+object StatisticsHttpAdapter:
+  /**
+   * The default number of users retrieved when querying the
+   * leaderboard of this service.
+   */
+  private val DefaultLeaderboardWindowSize: Long = 100

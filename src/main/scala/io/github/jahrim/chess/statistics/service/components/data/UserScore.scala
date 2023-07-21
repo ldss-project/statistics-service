@@ -6,5 +6,4 @@ package io.github.jahrim.chess.statistics.service.components.data
  * @param username the name of the owner.
  * @param score the score of the owner.
  */
-case class UserScore(username: String, private[data] val score: Score):
-  export score.*
+case class UserScore(username: String, score: Score)

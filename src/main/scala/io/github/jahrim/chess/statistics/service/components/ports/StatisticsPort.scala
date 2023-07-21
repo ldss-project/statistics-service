@@ -66,7 +66,7 @@ trait StatisticsPort extends Port:
    * Get the leaderboard of the service.
    *
    * @param first the highest rank in the leaderboard to query (included).
-   * @param last  the lowest rank in the leaderboard to query (included).
+   * @param last  the lowest rank in the leaderboard to query (excluded).
    * @return a [[Future]] containing all the latest scores of all the
    *         users in the service between the specified ranks.
    * @note the scores are ordered by rank.

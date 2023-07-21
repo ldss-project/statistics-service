@@ -1,0 +1,338 @@
+[{
+  "_id": {
+    "$oid": "64adad08b010d1f5ca422a11"
+  },
+  "username": "carlovinti",
+  "latest_scores": [
+    {
+      "insertion": {
+        "$date": "2023-04-04T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 1,
+      "losses": 0,
+      "ratio": 1
+    },
+    {
+      "insertion": {
+        "$date": "2023-04-10T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 2,
+      "losses": 0,
+      "ratio": 2
+    },
+    {
+      "insertion": {
+        "$date": "2023-04-20T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 2,
+      "losses": 1,
+      "ratio": 2
+    },
+    {
+      "insertion": {
+        "$date": "2023-04-24T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 3,
+      "losses": 1,
+      "ratio": 3
+    },
+    {
+      "insertion": {
+        "$date": "2023-05-01T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 3,
+      "losses": 2,
+      "ratio": 1.5
+    },
+    {
+      "insertion": {
+        "$date": "2023-05-03T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 4,
+      "losses": 2,
+      "ratio": 2
+    },
+    {
+      "insertion": {
+        "$date": "2023-05-05T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 5,
+      "losses": 2,
+      "ratio": 2.5
+    },
+    {
+      "insertion": {
+        "$date": "2023-05-10T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 6,
+      "losses": 2,
+      "ratio": 3
+    },
+    {
+      "insertion": {
+        "$date": "2023-05-12T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 6,
+      "losses": 3,
+      "ratio": 2
+    },
+    {
+      "insertion": {
+        "$date": "2023-05-15T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 6,
+      "losses": 4,
+      "ratio": 1.5
+    },
+    {
+      "insertion": {
+        "$date": "2023-05-18T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 6,
+      "losses": 5,
+      "ratio": 1.2
+    },
+    {
+      "insertion": {
+        "$date": "2023-05-21T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 7,
+      "losses": 5,
+      "ratio": 1.4
+    },
+    {
+      "insertion": {
+        "$date": "2023-05-22T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 8,
+      "losses": 5,
+      "ratio": 1.6
+    },
+    {
+      "insertion": {
+        "$date": "2023-05-27T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 9,
+      "losses": 5,
+      "ratio": 1.8
+    },
+    {
+      "insertion": {
+        "$date": "2023-06-01T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 10,
+      "losses": 5,
+      "ratio": 2
+    },
+    {
+      "insertion": {
+        "$date": "2023-06-04T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 11,
+      "losses": 5,
+      "ratio": 2.2
+    },
+    {
+      "insertion": {
+        "$date": "2023-06-07T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 12,
+      "losses": 5,
+      "ratio": 2.4
+    },
+    {
+      "insertion": {
+        "$date": "2023-06-10T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 13,
+      "losses": 5,
+      "ratio": 2.6
+    },
+    {
+      "insertion": {
+        "$date": "2023-06-15T22:00:00.000Z"
+      },
+      "rank": 1,
+      "wins": 13,
+      "losses": 6,
+      "ratio": 2.16
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "64adad08b010d1f5ca422a14"
+  },
+  "username": "vittoriogiusti",
+  "latest_scores": [
+    {
+      "insertion": {
+        "$date": "2023-06-06T22:00:00.000Z"
+      },
+      "rank": 2,
+      "wins": 1,
+      "losses": 0,
+      "ratio": 1
+    },
+    {
+      "insertion": {
+        "$date": "2023-06-10T22:00:00.000Z"
+      },
+      "rank": 2,
+      "wins": 1,
+      "losses": 1,
+      "ratio": 1
+    },
+    {
+      "insertion": {
+        "$date": "2023-06-18T22:00:00.000Z"
+      },
+      "rank": 3,
+      "wins": 1,
+      "losses": 2,
+      "ratio": 0.5
+    },
+    {
+      "insertion": {
+        "$date": "2023-06-24T22:00:00.000Z"
+      },
+      "rank": 2,
+      "wins": 2,
+      "losses": 2,
+      "ratio": 1
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "64adad08b010d1f5ca422a15"
+  },
+  "username": "pietrosbagliati",
+  "latest_scores": [
+    {
+      "insertion": {
+        "$date": "2023-06-04T16:00:00.000Z"
+      },
+      "rank": 3,
+      "wins": 1,
+      "losses": 0,
+      "ratio": 1
+    },
+    {
+      "insertion": {
+        "$date": "2023-06-14T14:00:00.000Z"
+      },
+      "rank": 3,
+      "wins": 1,
+      "losses": 1,
+      "ratio": 1
+    },
+    {
+      "insertion": {
+        "$date": "2023-04-20T18:00:00.000Z"
+      },
+      "rank": 3,
+      "wins": 1,
+      "losses": 2,
+      "ratio": 0.5
+    }
+  ]
+},
+{
+  "_id": {
+    "$oid": "64adad08b010d1f5ca422a16"
+  },
+  "username": "francopersi",
+  "latest_scores": [
+    {
+      "insertion": {
+        "$date": "2023-06-10T12:00:00.000Z"
+      },
+      "rank": 4,
+      "wins": 0,
+      "losses": 1,
+      "ratio": 0
+    },
+    {
+      "insertion": {
+        "$date": "2023-06-12T14:00:00.000Z"
+      },
+      "rank": 4,
+      "wins": 0,
+      "losses": 2,
+      "ratio": 0
+    },
+    {
+      "insertion": {
+        "$date": "2023-06-14T18:00:00.000Z"
+      },
+      "rank": 4,
+      "wins": 0,
+      "losses": 3,
+      "ratio": 0
+    },
+    {
+      "insertion": {
+        "$date": "2023-06-18T15:00:00.000Z"
+      },
+      "rank": 4,
+      "wins": 1,
+      "losses": 3,
+      "ratio": 0.33
+    },
+    {
+      "insertion": {
+        "$date": "2023-06-20T16:00:00.000Z"
+      },
+      "rank": 4,
+      "wins": 1,
+      "losses": 4,
+      "ratio": 0.25
+    },
+    {
+      "insertion": {
+        "$date": "2023-06-22T11:00:00.000Z"
+      },
+      "rank": 4,
+      "wins": 1,
+      "losses": 5,
+      "ratio": 0.2
+    },
+    {
+      "insertion": {
+        "$date": "2023-06-24T14:00:00.000Z"
+      },
+      "rank": 4,
+      "wins": 2,
+      "losses": 5,
+      "ratio": 0.4
+    },
+    {
+      "insertion": {
+        "$date": "2023-06-25T18:00:00.000Z"
+      },
+      "rank": 4,
+      "wins": 2,
+      "losses": 6,
+      "ratio": 0.33
+    }
+  ]
+}]

@@ -1,21 +1,25 @@
 package io.github.jahrim.chess.statistics.service.components.data.codecs
 
-import io.github.jahrim.chess.statistics.service.components.data.UserScore
-import io.github.jahrim.hexarc.persistence.bson.codec.{BsonDecoder, BsonEncoder}
+import ScoreCodec.given
+import io.github.jahrim.chess.statistics.service.components.data.{Score, UserScore}
+import io.github.jahrim.hexarc.persistence.bson.codecs.{
+  BsonDocumentDecoder,
+  BsonDocumentEncoder,
+  BsonDecoder,
+  BsonEncoder
+}
 import io.github.jahrim.hexarc.persistence.bson.dsl.BsonDSL.{*, given}
 import org.bson.conversions.Bson
 
 /** [[Bson]] codec for [[UserScore]]s. */
 object UserScoreCodec:
-  import ScoreCodec.given
-
   /** A given [[BsonDecoder]] for [[UserScore]]s. */
-  given bsonToUserScore: BsonDecoder[UserScore] = bson =>
+  given bsonToUserScore: BsonDocumentDecoder[UserScore] = bson =>
     UserScore(
-      bson.require("username"),
-      bson.require("score")
+      bson.require("username").as[String],
+      bson.require("score").as[Score]
     )
 
   /** A given [[BsonEncoder]] for [[UserScore]]s. */
-  given userScoreToBson: BsonEncoder[UserScore] = userScore =>
-    userScore.score.asBson.update { "username" :: userScore.username }
+  given userScoreToBson: BsonDocumentEncoder[UserScore] = userScore =>
+    userScore.score.asBson.asDocument.update { "username" :: userScore.username }
