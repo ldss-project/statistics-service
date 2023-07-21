@@ -1,5 +1,5 @@
 // ### Project Information #############################################################################################
-private class ProjectInfo { // TODO change project info
+private class ProjectInfo {
     val longName: String = "Chess Statistics Service"
     val description: String = "The service which handles the user scores in the application."
 
