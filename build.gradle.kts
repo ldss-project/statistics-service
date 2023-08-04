@@ -1,3 +1,6 @@
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+
 // ### Project Information #############################################################################################
 private class ProjectInfo {
     val longName: String = "Chess Statistics Service"
@@ -28,6 +31,7 @@ plugins {
         alias(wartremover)
         alias(git.semantic.versioning)
         alias(publish.on.central)
+        alias(docker)
     }
 }
 
@@ -109,4 +113,31 @@ signing {
     val signingKey: String? by project
     val signingPassword: String? by project
     useInMemoryPgpKeys(signingKey, signingPassword)
+}
+
+docker {
+    val dockerUsername: String? by project
+    val dockerPassword: String? by project
+    val dockerImage = "$dockerUsername/${project.name}:${gitSemVer.computeVersion()}"
+
+    registryCredentials {
+        url.set("https://index.docker.io/v1/")
+        username.set(dockerUsername)
+        password.set(dockerPassword)
+    }
+
+    val dockerBuild by tasks.registering(DockerBuildImage::class){
+        doNotTrackState("Cannot update inputDir otherwise.")
+        group = "Docker"
+        description = "Build a docker image from a Dockerfile in the project directory."
+        inputDir.set(project.projectDir)
+        images.add(dockerImage)
+    }
+
+    val dockerPublish by tasks.registering(DockerPushImage::class){
+        group = "Docker"
+        description = "Publish a docker image built from a Dockerfile in the project directory."
+        dependsOn(dockerBuild)
+        images.add(dockerImage)
+    }
 }

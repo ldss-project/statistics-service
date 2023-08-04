@@ -21,6 +21,8 @@ jobs:
         ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_SIGNING_PASSWORD }}
         ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
         ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
+        ORG_GRADLE_PROJECT_dockerUsername: ${{ secrets.DOCKER_USERNAME }}
+        ORG_GRADLE_PROJECT_dockerPassword: ${{ secrets.DOCKER_PASSWORD }}
       steps:
         # Install the specified version of Java in the provided runner
         - name: Install Java
@@ -31,6 +33,9 @@ jobs:
         # Install Node in the provided runner
         - name: Install Node
           uses: actions/setup-node@v3
+        # Install Docker in the provided runner
+        - name: Install Docker
+          uses: docker-practice/actions-setup-docker@master
         # Clone the repository, with full history and submodules
         - name: Clone Repository
           uses: actions/checkout@v3
@@ -51,3 +56,6 @@ jobs:
           run: |
             chmod 777 ./gradlew
             ./gradlew publish --no-parallel
+        # Publish artifacts on Docker
+        - name: Publish on Docker
+          run: ./gradlew dockerPublish
