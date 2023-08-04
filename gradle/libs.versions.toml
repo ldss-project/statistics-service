@@ -10,7 +10,7 @@ publish-on-central-version = "5.0.7"                # simplifies publishing arti
 vertx-web-version = "4.4.4"                         # event-loop architecture framework
 hexarc-version = "0.4.1"                            # hexagonal architecture framework
 scallop-version = "4.1.0"                           # cli argument parser for scala
-docker-version = "9.3.2"                            # allows interaction with a docker remote
+docker-version = "6.7.0"                            # allows interaction with a docker remote
 # insert the version of the dependencies here...
 
 [libraries]
