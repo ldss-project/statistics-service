@@ -10,6 +10,7 @@ publish-on-central-version = "5.0.7"                # simplifies publishing arti
 vertx-web-version = "4.4.4"                         # event-loop architecture framework
 hexarc-version = "0.4.1"                            # hexagonal architecture framework
 scallop-version = "4.1.0"                           # cli argument parser for scala
+docker-version = "9.3.2"                            # allows interaction with a docker remote
 # insert the version of the dependencies here...
 
 [libraries]
@@ -32,4 +33,5 @@ spotless = { id = "com.diffplug.spotless", version.ref = "spotless-version" }
 wartremover = { id = "io.github.jahrim.wartremover", version.ref = "wartremover-version" }
 publish-on-central = { id = "org.danilopianini.publish-on-central", version.ref = "publish-on-central-version" }
 git-semantic-versioning = { id = "org.danilopianini.git-sensitive-semantic-versioning-gradle-plugin", version.ref = "git-semantic-versioning-version" }
+docker = { id = "com.bmuschko.docker-remote-api", version.ref = "docker-version" }
 # insert plugins here...
