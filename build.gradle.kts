@@ -118,7 +118,7 @@ signing {
 docker {
     val dockerUsername: String? by project
     val dockerPassword: String? by project
-    val dockerImage = "$dockerUsername/${project.name}:${gitSemVer.computeVersion()}"
+    val dockerImage = "$dockerUsername/${project.group}.${project.name}:${gitSemVer.computeVersion().substringBefore('-')}"
 
     registryCredentials {
         url.set("https://index.docker.io/v1/")
