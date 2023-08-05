@@ -17,12 +17,12 @@ jobs:
         GIT_COMMITTER_EMAIL: jahrim.cesario2@studio.unibo.it
         GIT_AUTHOR_NAME: Jahrim Gabriele Cesario
         GIT_AUTHOR_EMAIL: jahrim.cesario2@studio.unibo.it
+        DOCKER_REGISTRY_USER: ${{ secrets.DOCKER_USERNAME }}
+        DOCKER_REGISTRY_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
         ORG_GRADLE_PROJECT_signingKey: ${{ secrets.GPG_SIGNING_KEY }}
         ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.GPG_SIGNING_PASSWORD }}
         ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.MAVEN_CENTRAL_USERNAME }}
         ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.MAVEN_CENTRAL_PASSWORD }}
-        ORG_GRADLE_PROJECT_dockerUsername: ${{ secrets.DOCKER_USERNAME }}
-        ORG_GRADLE_PROJECT_dockerPassword: ${{ secrets.DOCKER_PASSWORD }}
       steps:
         # Install the specified version of Java in the provided runner
         - name: Install Java
@@ -46,8 +46,8 @@ jobs:
         # Validate the gradle wrapper to void supply chain attacks from pull-request that changes the wrapper
         - name: Validate Gradle Wrapper
           uses: gradle/wrapper-validation-action@v1
-        # Publish artifacts on GitHub
-        - name: Publish on GitHub
+        # Publish artifacts on GitHub and Docker
+        - name: Publish on GitHub and Docker
           run: |
             npm clean-install
             npx semantic-release
@@ -56,6 +56,3 @@ jobs:
           run: |
             chmod 777 ./gradlew
             ./gradlew publish --no-parallel
-        # Publish artifacts on Docker
-        - name: Publish on Docker
-          run: ./gradlew dockerPublish
