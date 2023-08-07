@@ -11,16 +11,16 @@ import io.github.jahrim.chess.statistics.service.components.ports.StatisticsPort
 import io.github.jahrim.hexarc.persistence.bson.dsl.BsonDSL.{*, given}
 import io.github.jahrim.hexarc.architecture.vertx.core.components.{Adapter, AdapterContext}
 import io.vertx.ext.web.{Router, RoutingContext}
-import io.vertx.ext.web.handler.BodyHandler
+import io.vertx.ext.web.handler.{BodyHandler, CorsHandler}
 import io.vertx.core.http.{HttpServerOptions, HttpServerResponse}
 import io.vertx.core.Handler
+import scala.jdk.CollectionConverters.SeqHasAsJava
 import scala.util.Try
 
 /** An [[Adapter]] that enables http communication with a [[StatisticsPort]] of a service. */
 class StatisticsHttpAdapter(
-    options: HttpServerOptions = new HttpServerOptions:
-      setHost("localhost")
-      setPort(8080)
+    httpOptions: HttpServerOptions = HttpServerOptions().setHost("localhost").setPort(8080),
+    allowedOrigins: Seq[String] = Seq()
 ) extends Adapter[StatisticsPort]:
 
   override protected def init(context: AdapterContext[StatisticsPort]): Unit =
@@ -28,6 +28,7 @@ class StatisticsHttpAdapter(
 
     router
       .route()
+      .handler(CorsHandler.create().addOrigins(allowedOrigins.asJava))
       .handler(BodyHandler.create())
       .handler(LogHandler(context.log.info))
 
@@ -98,7 +99,7 @@ class StatisticsHttpAdapter(
       )
 
     context.vertx
-      .createHttpServer(options)
+      .createHttpServer(httpOptions)
       .requestHandler(router)
       .listen(_ => context.log.info("The server is up!"))
 
