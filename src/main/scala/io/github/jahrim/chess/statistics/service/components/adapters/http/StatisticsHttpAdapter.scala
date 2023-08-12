@@ -10,11 +10,13 @@ import io.github.jahrim.chess.statistics.service.components.adapters.http.handle
 import io.github.jahrim.chess.statistics.service.components.ports.StatisticsPort
 import io.github.jahrim.hexarc.persistence.bson.dsl.BsonDSL.{*, given}
 import io.github.jahrim.hexarc.architecture.vertx.core.components.{Adapter, AdapterContext}
+import io.netty.handler.codec.http.HttpResponseStatus
 import io.vertx.ext.web.{Router, RoutingContext}
 import io.vertx.ext.web.handler.{BodyHandler, CorsHandler}
-import io.vertx.core.http.{HttpServerOptions, HttpServerResponse}
 import io.vertx.core.Handler
-import scala.jdk.CollectionConverters.SeqHasAsJava
+import io.vertx.core.http.{HttpMethod, HttpServerOptions, HttpServerResponse}
+
+import scala.jdk.CollectionConverters.{SeqHasAsJava, SetHasAsJava}
 import scala.util.Try
 
 /** An [[Adapter]] that enables http communication with a [[StatisticsPort]] of a service. */
@@ -26,9 +28,23 @@ class StatisticsHttpAdapter(
   override protected def init(context: AdapterContext[StatisticsPort]): Unit =
     val router: Router = Router.router(context.vertx)
 
+    val cors: CorsHandler =
+      CorsHandler
+        .create()
+        .addOrigins(allowedOrigins.asJava)
+        .allowCredentials(true)
+        .allowedMethods(
+          Set(
+            HttpMethod.HEAD,
+            HttpMethod.GET,
+            HttpMethod.POST,
+            HttpMethod.PUT
+          ).asJava
+        )
+
     router
       .route()
-      .handler(CorsHandler.create().addOrigins(allowedOrigins.asJava))
+      .handler(cors)
       .handler(BodyHandler.create())
       .handler(LogHandler(context.log.info))
 
