@@ -4,7 +4,6 @@ import io.github.jahrim.chess.statistics.service.components.ports.{StatisticsMod
 import io.github.jahrim.chess.statistics.service.components.adapters.http.StatisticsHttpAdapter
 import io.github.jahrim.hexarc.persistence.mongodb.MongoDBPersistentCollection
 import io.github.jahrim.hexarc.architecture.vertx.core.dsl.VertxDSL.*
-import io.github.jahrim.hexarc.logging.Loggers
 import io.vertx.core.Vertx
 import io.vertx.core.http.HttpServerOptions
 import org.rogach.scallop.*
