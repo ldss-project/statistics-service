@@ -6,7 +6,7 @@ import io.github.jahrim.chess.statistics.service.components.data.{
   UserScore,
   UserScoreHistory
 }
-import io.github.jahrim.chess.statistics.service.components.exceptions.UserNotFoundException
+import io.github.jahrim.chess.statistics.service.components.exceptions.*
 import io.github.jahrim.hexarc.architecture.vertx.core.components.PortContext
 import io.github.jahrim.hexarc.persistence.PersistentCollection
 import io.github.jahrim.hexarc.persistence.bson.dsl.BsonDSL.{*, given}
@@ -34,7 +34,7 @@ class StatisticsModel(scores: PersistentCollection with MongoDBQueryLanguage)
 
   override protected def init(context: PortContext): Unit = {}
 
-  override def addScore(username: String, hasWon: Boolean): Future[Unit] =
+  override def addScore(username: String, hasWon: Option[Boolean]): Future[Unit] =
     context.vertx.executeBlocking[Unit] { promise =>
       activity(s"adding result '${resultString(hasWon)}' to the score of the user '$username'")(
         readActualScoreByUser(username)
@@ -77,8 +77,8 @@ class StatisticsModel(scores: PersistentCollection with MongoDBQueryLanguage)
   override def getScoreHistory(username: String): Future[Seq[Score]] =
     context.vertx.executeBlocking[Seq[Score]](promise =>
       activity(s"retrieving score history of user '$username'")(
-        readStatisticsByUser(username, bson { "latest_scores" :: 1 })
-          .map(_.require("latest_scores").as[Seq[Score]])
+        readStatisticsByUser(username, bson { "latestScores" :: 1 })
+          .map(_.require("latestScores").as[Seq[Score]])
           .flatMap(history => readActualScoreByUser(username).map(history :+ _))
           .get
       ).fold(
@@ -104,7 +104,7 @@ class StatisticsModel(scores: PersistentCollection with MongoDBQueryLanguage)
    * @return a [[Success]] containing the first [[Score]] of the user if the operation
    *         succeeded; a [[Failure]] otherwise.
    */
-  private def createScoreHistoryByUser(username: String, hasWon: Boolean): Try[Score] =
+  private def createScoreHistoryByUser(username: String, hasWon: Option[Boolean]): Try[Score] =
     val newScore: Score = Score().addResult(hasWon)
     activity(s"initializing scores of user '$username' with result '${resultString(hasWon)}'")(
       scores
@@ -130,7 +130,7 @@ class StatisticsModel(scores: PersistentCollection with MongoDBQueryLanguage)
         .update(
           UpdateQuery(
             filter = bson { "username" :: username },
-            update = bson { "$push" :# { "latest_scores" :: newScore } }
+            update = bson { "$push" :# { "latestScores" :: newScore } }
           )
         )
         .map(_ => newScore)
@@ -156,9 +156,9 @@ class StatisticsModel(scores: PersistentCollection with MongoDBQueryLanguage)
               UpdateQuery(
                 filter = bson {
                   "username" :: username
-                  "latest_scores.insertion" :: newScore.insertionDate
+                  "latestScores.insertion" :: newScore.insertionDate
                 },
-                update = bson { "$set" :# { "latest_scores.$.rank" :: rank } }
+                update = bson { "$set" :# { "latestScores.$.rank" :: rank } }
               )
             )
             .map(_ => rank)
@@ -202,10 +202,10 @@ class StatisticsModel(scores: PersistentCollection with MongoDBQueryLanguage)
    * @param first the rank of the first user to select (included).
    * @param last  the rank of the last user to select (excluded).
    * @return a [[Success]] containing the actual up-to-date [[UserScore]]s
-   *         of the users of this service; a [[Failure]] with an
-   *         [[IllegalArgumentException]] if the rank of the last user to
-   *         select isn't strictly greater than the rank of the first user
-   *         to select.
+   *         of the users of this service sorted by ascending rank;
+   *         a [[Failure]] with an [[MalformedInputException]] if the rank
+   *         of the last user to select isn't strictly greater than the rank
+   *         of the first user to select.
    * @note the actual up-to-date [[UserScore]] of the user requires the actual
    *       up-to-date rank of the user, which does not depend only on the
    *       information of the user but also on that of the other users in
@@ -216,7 +216,7 @@ class StatisticsModel(scores: PersistentCollection with MongoDBQueryLanguage)
     activity(s"retrieving actual scores in [${boundaryString(first)}, ${boundaryString(last)}[")(
       Try {
         if last <= first then
-          throw IllegalArgumentException(
+          throw MalformedInputException(
             "Last queried element of the leaderboard must be strictly greater than the first queried element."
           )
       }.flatMap(validBoundaries =>
@@ -226,7 +226,7 @@ class StatisticsModel(scores: PersistentCollection with MongoDBQueryLanguage)
               bson {
                 "$project" :# {
                   "username" :: 1
-                  "score" :# { "$last" :: "$latest_scores" }
+                  "score" :# { "$last" :: "$latestScores" }
                 }
               },
               bson { "$sort" :# { "score.ratio" :: -1 } },
@@ -272,8 +272,8 @@ class StatisticsModel(scores: PersistentCollection with MongoDBQueryLanguage)
     )
 
   /** The string representation of the result of a match. */
-  private def resultString(hasWon: Boolean): String =
-    if (hasWon) "victory" else "loss"
+  private def resultString(hasWon: Option[Boolean]): String =
+    hasWon.map(hasWon => if hasWon then "victory" else "loss").getOrElse("par")
 
   /** The string representation of a boundary in the leaderboard. */
   private def boundaryString(boundary: Long): String =

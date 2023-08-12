@@ -17,12 +17,12 @@ object UserScoreHistoryCodec:
   given bsonToUserScoreHistory: BsonDocumentDecoder[UserScoreHistory] = bson =>
     UserScoreHistory(
       bson.require("username").as[String],
-      bson.require("latest_scores").as[Seq[Score]]
+      bson.require("latestScores").as[Seq[Score]]
     )
 
   /** A given [[BsonEncoder]] for [[UserScoreHistory]]s. */
   given userScoreHistoryToBson: BsonDocumentEncoder[UserScoreHistory] = userScoreHistory =>
     bson {
       "username" :: userScoreHistory.username
-      "latest_scores" :: userScoreHistory.latestScores
+      "latestScores" :: userScoreHistory.latestScores
     }
