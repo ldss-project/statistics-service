@@ -23,9 +23,14 @@ case class Score private[data] (
    * Add the specified result to this [[Score]].
    *
    * @param hasWon the specified result.
+   *               This is an [[Option]] containing true, if the user won the
+   *               match; false otherwise. If the [[Option]] is empty, the
+   *               result of the match will be registered in the scores of the
+   *               user as a par.
    * @return a new [[Score]] obtained by adding the specified result to this score.
    */
-  def addResult(hasWon: Boolean): Score = if hasWon then this.addVictory() else this.addLoss()
+  def addResult(hasWon: Option[Boolean]): Score =
+    hasWon.map(hasWon => if hasWon then this.addVictory() else this.addLoss()).getOrElse(this)
 
   /**
    * Add a victory to this [[Score]].

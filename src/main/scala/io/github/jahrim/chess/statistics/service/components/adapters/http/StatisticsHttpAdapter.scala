@@ -41,7 +41,7 @@ class StatisticsHttpAdapter(
       .handler(message =>
         future {
           val username: String = message.requirePathParam("username")
-          val hasWon: Boolean = message.requireBodyParam("score.hasWon").as[Boolean]
+          val hasWon: Option[Boolean] = jsonToBson(message.body.asJsonObject)("score.hasWon").map(_.as[Boolean])
           (username, hasWon)
         }
           .compose(context.api.addScore(_, _))

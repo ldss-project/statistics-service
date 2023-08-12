@@ -18,13 +18,16 @@ trait StatisticsPort extends Port:
    * Add the specified score to the scores of the specified user.
    *
    * @param username the name of the specified user.
-   * @param hasWon   the specified score. True, if the user won the
-   *                 match; false otherwise.
+   * @param hasWon   the specified score.
+   *                 This is an [[Option]] containing true, if the user won the
+   *                 match; false otherwise. If the [[Option]] is empty, the
+   *                 result of the match will be registered in the scores of the
+   *                 user as a par.
    * @return a [[Future]] completing when the specified score has
    *         been successfully added to the scores of the specified
    *         user.
    */
-  def addScore(username: String, hasWon: Boolean): Future[Unit]
+  def addScore(username: String, hasWon: Option[Boolean]): Future[Unit]
 
   /**
    * Delete the scores of the specified user.
@@ -69,6 +72,6 @@ trait StatisticsPort extends Port:
    * @param last  the lowest rank in the leaderboard to query (excluded).
    * @return a [[Future]] containing all the latest scores of all the
    *         users in the service between the specified ranks.
-   * @note the scores are ordered by rank.
+   * @note the scores are ordered by ascending rank.
    */
   def getLeaderboard(first: Long, last: Long): Future[Seq[UserScore]]
