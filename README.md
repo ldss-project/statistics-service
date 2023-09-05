@@ -1,4 +1,4 @@
-# Chess Statistics Service
+# Statistics Service
 
 [![GitHub Release](https://img.shields.io/github/v/tag/ldss-project/statistics-service?label=Github&color=blue)](https://github.com/ldss-project/statistics-service/releases)
 [![Maven Central](https://img.shields.io/maven-central/v/io.github.jahrim.chess/statistics-service?label=Maven%20Central&color=blue)](https://central.sonatype.com/artifact/io.github.jahrim.chess/statistics-service)
@@ -8,4 +8,6 @@
 
 ---
 
-The service which handles the user scores in the application.
+A service which handles the scores of the users of an application.
+
+See documentation at the [repository webpage](https://ldss-project.github.io/statistics-service).
