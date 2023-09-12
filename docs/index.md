@@ -63,8 +63,8 @@ utilizza il servizio potrebbe essere notificato delle seguenti
 `StatisticsServiceException`s:
 - `MalformedInputException`: indica all'utente che l'input specificato per una certa
   funzionalità da lui richiesta non è corretto;
-- `UserNotFoundException`: indica all'utente che un utente da lui richiesto non è
-  stato trovato all'interno del sistema.
+- `UserNotFoundException`: indica all'utente che il nome utente da lui specificato non è
+  associato a nessun dato nel sistema.
 
 ## Verifica
 
