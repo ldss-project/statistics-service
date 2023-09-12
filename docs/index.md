@@ -44,6 +44,7 @@ Le funzionalità definite dalla `StatisticsPort` sono le seguenti:
 - `getLeaderboard`: restituisce la classifica globale degli utenti del servizio;
 - `addScore`: aggiunge un nuovo punteggio per un utente del servizio;
 - `deleteScores`: rimuove tutte le statistiche di un utente del servizio.
+
 Tali funzionalità sono definite nei termini dei concetti del dominio del servizio.
 In particolare, i modelli relativi a tali concetti sono i seguenti:
 - `Score`: modella un punteggio nel servizio;
