@@ -75,3 +75,40 @@ esposte dal contratto _REST_ del servizio producessero i risultati attesi.
 In futuro, si dovrà creare degli _unit test_ equivalenti, ma automatici. Per fare ciò,
 sarà necessario approfondire come creare un database [MongoDB](https://www.mongodb.com)
 di tipo _in-memory_ in [Scala](https://scala-lang.org/).
+
+## Esecuzione
+
+Per eseguire il sistema è disponibile un jar al seguente
+[link](https://github.com/ldss-project/statistics-service/releases).
+
+Per eseguire il jar è sufficiente utilizzare il seguente comando:
+```shell
+java -jar statistics-service-<version>.jar \
+--mongodb-connection MONGODB_CONNECTION_STRING
+```
+
+In particolare, il jar permette di specificare i seguenti argomenti a linea di comando:
+- `--mongodb-connection MONGODB_CONNECTION_STRING`: obbligatorio. Permette di specificare
+  la stringa (`MONGODB_CONNECTION_STRING`) per connettersi all'istanza di
+  [MongoDB](https://www.mongodb.com) che sarà utilizzata dal servizio per memorizzare i propri
+  dati.
+- `--mongodb-database DATABASE_NAME`: opzionale. Permette di indicare il nome del database (`DATABASE_NAME`)
+  all'interno dell'istanza di [MongoDB](https://www.mongodb.com) specificata in cui il servizio memorizzerà i
+  propri dati. Default: `statistics`.
+- `--mongodb-collection COLLECTION_NAME`: opzionale. Permette di indicare il nome della collezione
+  (`COLLECTION_NAME`) all'interno del database [MongoDB](https://www.mongodb.com) specificato in cui il
+  servizio memorizzerà i propri dati. Default: `scores`.
+- `--http-host HOST`: opzionale. Permette di indicare il nome dell'host (`HOST`) su cui sarà esposto il
+  contratto _REST_ del servizio. Default: `localhost`.
+- `--http-port PORT`: opzionale. Permette di indicare la porta dell'host (`PORT`) su cui sarà esposto il
+  contratto _REST_ del servizio. Default: `8080`.
+- `--allowed-origins ORIGIN_1;ORIGIN_2;...;`: opzionale. Permette di indicare una lista dei siti web che
+  saranno autorizzati a comunicare con il servizio. Tale lista consiste in una sequenza di URL separati
+  da `;`. Default: _nessun sito web autorizzato_.
+
+In alternativa, un'immagine per eseguire il jar è stata pubblicata anche su [Docker](https://www.docker.com/).
+Per eseguire il servizio tramite [Docker](https://www.docker.com/) è sufficiente utilizzare il seguente comando:
+```shell
+docker run -it jahrim/io.github.jahrim.chess.statistics-service:<version> \
+--mongodb-connection MONGODB_CONNECTION_STRING
+```
