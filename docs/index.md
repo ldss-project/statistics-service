@@ -20,9 +20,6 @@ nav_order: 1
 Lo **Statistics Service** è un servizio che gestisce i punteggi degli utenti
 all'interno di un'applicazione.
 
-Il servizio espone un contratto di tipo _REST_, disponibile al seguente 
-[link](/swagger-apis/statistics-service/latest/rest).
-
 ## Implementazione
 
 L'implementazione dello **Statistics Service** è descritta dal seguente diagramma delle classi
@@ -36,7 +33,7 @@ Come si può vedere dal diagramma, l'implementazione del servizio dipende dal fr
 In particolare, il servizio definisce due componenti principali:
 - `StatisticsPort`: definisce le funzionalità del servizio.
 - `StatisticsHttpAdapter`: espone alcune delle funzionalità della `StatisticsPort` attraverso un
-  contratto di tipo _REST_.
+  contratto di tipo _REST_, disponibile al seguente [link](/swagger-apis/statistics-service/latest/rest).
 
 Le funzionalità definite dalla `StatisticsPort` sono le seguenti:
 - `getScore`: restituisce l'ultimo punteggio di un utente del servizio;
