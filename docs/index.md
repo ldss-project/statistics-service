@@ -57,7 +57,7 @@ della `StatisticsPort` attraverso delle opportune query.
 Lo `StatisticsHttpAdapter` e lo `StatisticsModel` possono generare delle eccezioni,
 modellate dalla classe `StatisticsServiceException`. In particolare, l'utente che
 utilizza il servizio potrebbe essere notificato delle seguenti
-`StatisticsServiceException`s:
+`StatisticsServiceException`:
 - `MalformedInputException`: indica all'utente che l'input specificato per una certa
   funzionalità da lui richiesta non è corretto;
 - `UserNotFoundException`: indica all'utente che il nome utente da lui specificato non è
